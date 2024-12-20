@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Authentic Weather',
+      title: 'Authentic Weather Clone',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
