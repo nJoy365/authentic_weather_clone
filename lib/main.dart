@@ -4,9 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'descriptions.dart';
 
 Future<WeatherData> fetchWeatherData(double latitude, double longitude) async {
-  final String apiKey = '#####';
+  final String apiKey = '3c18a24b88e87312af59f3b9f92fb0cf';
   final Uri url = Uri.parse(
       'http://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey&units=metric');
   final response = await http.get(url);
@@ -25,6 +26,7 @@ class WeatherData {
   final double windSpeed;
   final int windDeg;
   final String weatherMain;
+  final String weatherDescription;
   final String icon;
 
   WeatherData({
@@ -34,6 +36,7 @@ class WeatherData {
     this.windSpeed = 0.0,
     this.windDeg = 0,
     this.weatherMain = "",
+    this.weatherDescription = "",
     this.icon = "",
   });
   factory WeatherData.fromJson(Map<String, dynamic> json) {
@@ -44,6 +47,7 @@ class WeatherData {
       windSpeed: json['wind']['speed'],
       windDeg: json['wind']['deg'],
       weatherMain: json['weather'][0]['main'],
+      weatherDescription: json['weather'][0]['description'],
       icon: json['weather'][0]['icon'],
     );
   }
@@ -57,7 +61,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Authentic Weather',
+      title: 'Authentic Weather Clone',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -75,7 +79,9 @@ class GeolocationApp extends StatefulWidget {
 
 class _GeolocationAppState extends State<GeolocationApp> {
   late Future<Position>? _currentLocation;
+  late Future<WeatherDescription>? _weatherDesc;
   late WeatherData _weatherData = WeatherData();
+  late WeatherDescription _weatherDescription = WeatherDescription("", "");
   late bool servicePermission = false;
   late LocationPermission permission;
   Future<Position>? _getCurrentLocation() async {
@@ -99,17 +105,29 @@ class _GeolocationAppState extends State<GeolocationApp> {
     super.initState();
     _currentLocation = _getCurrentLocation();
     _currentLocation?.then((position) {
-      if (position != null) {
+      {
         fetchWeatherData(position.latitude, position.longitude)
             .then((weatherData) {
           setState(() {
             _weatherData = weatherData;
+          });
+        }).then((_) {
+          _weatherDesc = getWeatherDescription(_weatherData.weatherMain,
+              _weatherData.weatherDescription, _weatherData.temp);
+          _weatherDesc?.then((weatherDesc) {
+            setState(() {
+              _weatherDescription = weatherDesc;
+            });
+          }).catchError((error) {
+            print('Error fetching weather description: $error');
           });
         }).catchError((error) {
           print('Error fetching weather data: $error');
         });
       }
     });
+    print(
+        "${_weatherData.weatherMain} ${_weatherData.weatherDescription} ${_weatherData.temp}");
   }
 
   @override
@@ -145,7 +163,7 @@ class _GeolocationAppState extends State<GeolocationApp> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Current Weather ${_weatherData.temp}°C',
+                                      _weatherDescription.text,
                                       style: GoogleFonts.arimo(
                                         textStyle: TextStyle(
                                           fontSize: 80,
@@ -155,17 +173,17 @@ class _GeolocationAppState extends State<GeolocationApp> {
                                       ),
                                     ),
                                     Container(
-                                      height: 20,
+                                      height: 120,
                                     ),
                                     Text(
-                                      'Feels like ${_weatherData.feelsLike}°C',
+                                      _weatherDescription.subtext,
                                       style: GoogleFonts.arimo(
                                           textStyle: TextStyle(
-                                              fontSize: 60,
-                                              fontWeight: FontWeight.w500,
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w300,
                                               height: 0.8)),
                                     ),
-                                    Container(height: 100)
+                                    Container(height: 20)
                                   ])
                             ])));
               }

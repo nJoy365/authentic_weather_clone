@@ -1,0 +1,94 @@
+{
+    "Thunderstorm": {
+        "thunderstorm with light rain": [
+            {
+                "text": "It's a fucking flashing outside",
+                "subtext": "Put on your best face for the paparazzi"
+            }
+        ],
+        "thunderstorm with heavy rain": [
+            {
+                "text": "Hope you've got a damn boat",
+                "subtext": "Just look outside for more information"
+            }
+        ],
+        "thunderstorm with hail": [
+            {
+                "text": "Mother nature's throwing shit at you",
+                "subtext": "Helmets might actually be useful"
+            }
+        ]
+    },
+    "Drizzle": {
+        "light drizzle": [
+            {
+                "text": "It's slightly spitting, not worth mentioning",
+                "subtext": "Umbrella? Pffft"
+            }
+        ],
+        "heavy drizzle": [
+            {
+                "text": "You might want to reconsider that walk",
+                "subtext": "Use your window, genius"
+            }
+        ]
+    },
+    "Rain": {
+        "light rain": [
+            {
+                "text": "It's drizzling like a leaky faucet",
+                "subtext": "Just look outside for more information"
+            }
+        ],
+        "heavy rain": [
+            {
+                "text": "It's pissing down like no one's business",
+                "subtext": "Skip the shower today"
+            }
+        ]
+    },
+    "Snow": {
+        "light snow": [
+            {
+                "text": "Tiny flakes, nothing to sneeze at",
+                "subtext": "Peek outside if you care"
+            }
+        ],
+        "heavy snow": [
+            {
+                "text": "Buried under a pile of icy crap",
+                "subtext": "Time to build your igloo"
+            }
+        ]
+    },
+    "Clear": {
+        "clear sky": [
+            {
+                "text": "Not a damn cloud in sight",
+                "subtext": "Bask in it, or whatever"
+            }
+        ]
+    },
+    "Clouds": {
+        "few clouds": [
+            {
+                "text": "Just a few clouds loitering about",
+                "subtext": "Nothing exciting to see"
+            }
+        ],
+        "overcast clouds": [
+            {
+                "text": "It's like a damn gray blanket",
+                "subtext": "Glimmer of hope? Not here"
+            }
+        ]
+    },
+    "Fog": {
+        "fog": [
+            {
+                "text": "Fog's messing with your visibility",
+                "subtext": "Feel your way outside if needed"
+            }
+        ]
+    }
+}
